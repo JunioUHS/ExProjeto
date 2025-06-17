@@ -5,7 +5,7 @@ namespace ExProjetoAPI.Extensions
 {
     public static class ModelStateExtensions
     {
-        public static List<ApiError> ToApiErrors(this ModelStateDictionary modelState)
+        public static IEnumerable<ApiError> ToApiErrors(this ModelStateDictionary modelState)
         {
             return modelState
                 .Where(x => x.Value?.Errors.Count > 0)

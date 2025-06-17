@@ -1,10 +1,10 @@
 ﻿namespace ExProjetoAPI.Responses
 {
-    public class ApiPagedResponse<T> : ApiResponse<List<T>>
+    public class ApiPagedResponse<T> : ApiResponse<IEnumerable<T>>
     {
         public PaginationMetadata Meta { get; protected set; } = new();
 
-        public static ApiPagedResponse<T> Ok(List<T> data, int totalItems, int page, int pageSize, string? message = null)
+        public static ApiPagedResponse<T> Ok(IEnumerable<T> data, int totalItems, int page, int pageSize, string? message = null)
         {
             return new ApiPagedResponse<T>
             {

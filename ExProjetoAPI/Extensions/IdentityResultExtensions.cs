@@ -5,7 +5,7 @@ namespace ExProjetoAPI.Extensions
 {
     public static class IdentityResultExtensions
     {
-        public static List<ApiError> ToApiErrors(this IdentityResult result)
+        public static IEnumerable<ApiError> ToApiErrors(this IdentityResult result)
         {
             return result.Errors
                 .Select(e => new ApiError

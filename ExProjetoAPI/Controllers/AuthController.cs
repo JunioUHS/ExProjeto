@@ -24,7 +24,7 @@ namespace ExProjetoAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ApiResponse<object>.Fail(ModelState.ToApiErrors()));
+                return BadRequest(ApiResponse<IEnumerable<ApiError>>.Fail(ModelState.ToApiErrors()));
 
             var (token, refreshToken) = await _userService.LoginAsync(dto);
 
@@ -40,7 +40,7 @@ namespace ExProjetoAPI.Controllers
                 Expires = DateTimeOffset.UtcNow.AddDays(UserRefreshToken.DefaultExpirationDays)
             });
 
-            return Ok(ApiResponse<object>.Ok(token, "Login feito com sucesso."));
+            return Ok(ApiResponse<string>.Ok(token, "Login feito com sucesso."));
         }
 
         [HttpPost("refresh-token")]
@@ -66,7 +66,7 @@ namespace ExProjetoAPI.Controllers
                 Expires = DateTimeOffset.UtcNow.AddDays(UserRefreshToken.DefaultExpirationDays)
             });
 
-            return Ok(ApiResponse<object>.Ok(token, "Token renovado com sucesso."));
+            return Ok(ApiResponse<string>.Ok(token, "Token renovado com sucesso."));
         }
 
         [HttpPost("logout")]
@@ -74,14 +74,14 @@ namespace ExProjetoAPI.Controllers
         {
             var refreshToken = Request.Cookies["refreshToken"];
             if (string.IsNullOrEmpty(refreshToken))
-                return Ok(ApiResponse<object>.Ok("Logout realizado."));
+                return Ok(ApiResponse<string>.Ok("Logout realizado."));
 
             await _userService.LogoutAsync(refreshToken);
 
             // Remove o cookie do refresh token
             Response.Cookies.Delete("refreshToken");
 
-            return Ok(ApiResponse<object>.Ok("Logout realizado com sucesso."));
+            return Ok(ApiResponse<string>.Ok("Logout realizado com sucesso."));
         }
     }
 }

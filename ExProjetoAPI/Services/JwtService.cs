@@ -23,7 +23,7 @@ namespace ExProjetoAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName ?? ""),
-                new Claim("FullName", user.FullName)
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FullName)
             };
 
             var jwtKey = _configuration["Jwt:Key"];

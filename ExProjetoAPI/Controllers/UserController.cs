@@ -23,12 +23,12 @@ namespace ExProjetoAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ApiResponse<object>.Fail(ModelState.ToApiErrors()));
+                return BadRequest(ApiResponse<IEnumerable<ApiError>>.Fail(ModelState.ToApiErrors()));
 
             var result = await _userService.RegisterAsync(dto);
 
             if (!result.Succeeded)
-                return BadRequest(ApiResponse<object>.Fail(result.ToApiErrors()));
+                return BadRequest(ApiResponse<IEnumerable<ApiError>>.Fail(result.ToApiErrors()));
 
             return Ok(ApiResponse<object>.Ok("Login feito com sucesso."));
         }
